@@ -3,12 +3,13 @@ import {
   Controller,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   ValidationPipe,
 } from '@nestjs/common';
 import { User } from 'src/app.service';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto/create-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -18,7 +19,7 @@ export class UsersController {
     return this.userService.getUsers();
   }
   @Get('/:id')
-  getUserById(@Param('id') id: string): User | object {
+  getUserById(@Param('id', ParseIntPipe) id: string): User | object {
     const selectedUser = this.userService.getUser(id);
     return (
       selectedUser || {
