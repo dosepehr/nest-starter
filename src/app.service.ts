@@ -8,24 +8,9 @@ export type Message = {
 };
 @Injectable()
 export class AppService {
-  getHello(): User[] {
-    return [
-      {
-        name: 'sepehr',
-      },
-      {
-        name: 'ali',
-      },
-    ];
-  }
-  getUser(): User {
+  getWelcome(): Message {
     return {
-      name: 'sepehr',
-    };
-  }
-  addUser(): Message {
-    return {
-      message: 'user added',
+      message: 'welcome home:)',
     };
   }
 }
