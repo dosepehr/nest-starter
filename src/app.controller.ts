@@ -1,5 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService, User } from './app.service';
+import { Controller, Get, Post } from '@nestjs/common';
+import { AppService, Message, User } from './app.service';
 
 @Controller()
 export class AppController {
@@ -8,5 +8,13 @@ export class AppController {
   @Get('/home')
   getHello(): User[] {
     return this.appService.getHello();
+  }
+  @Get('/user')
+  getUser(): User {
+    return this.appService.getUser();
+  }
+  @Post('/addUser')
+  addUser(): Message {
+    return this.appService.addUser();
   }
 }
