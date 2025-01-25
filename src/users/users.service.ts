@@ -21,8 +21,8 @@ export class UsersService {
   getUsers(): User[] {
     return this.users;
   }
-  getUser(id: string) {
-    return this.users.find((user) => user.id == +id);
+  getUser(id: number) {
+    return this.users.find((user) => user.id == id);
   }
   addUser(user: CreateUserDto) {
     return this.users.push({
