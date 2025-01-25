@@ -22,7 +22,7 @@ export class UsersController {
   }
   @Get('/:id')
   getUserById(
-    @Param('id', ParseIntPipe, CustomPipe) id: number,
+    @Param('id', ParseIntPipe,  new CustomPipe(11)) id: number,
   ): User | object {
     const selectedUser = this.userService.getUser(id);
     return (
