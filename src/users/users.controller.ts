@@ -33,7 +33,7 @@ export class UsersController {
   }
   @Post('/')
   addUser(
-    @Body(new ValidationPipe(), new CustomPipe(), new MobilePipe())
+    @Body(new ValidationPipe(), new CustomPipe(11), new MobilePipe())
     data: CreateUserDto,
   ) {
     this.userService.addUser(data);
