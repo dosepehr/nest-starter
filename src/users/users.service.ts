@@ -11,11 +11,11 @@ export class UsersService {
     private userRepository: Repository<User>,
   ) {}
   private users: User[] = [];
-  getUsers(): any {
-    return this.users;
+  getUsers(): Promise<User[]> {
+    return this.userRepository.find({});
   }
-  getUser(id: number) {
-    return this.users.find((user) => user.id == id);
+  getUser(id: number): Promise<User | null> {
+    // return this.userRepository.find
   }
   addUser(user: CreateUserDto): User {
     const newUser = this.userRepository.create(user);

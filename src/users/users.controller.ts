@@ -17,7 +17,7 @@ import { User } from './entities/users.entity';
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
   @Get('/')
-  getUsers(): User[] {
+  getUsers(): Promise<User[]> {
     return this.userService.getUsers();
   }
   @Get('/:id')
