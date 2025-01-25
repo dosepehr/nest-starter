@@ -7,11 +7,11 @@ import {
   Post,
   ValidationPipe,
 } from '@nestjs/common';
-import { User } from 'src/app.service';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { CustomPipe } from 'src/pipes/custom.pipe';
 import { MobilePipe } from 'src/pipes/validate/mobile/mobile.pipe';
+import { User } from './entities/users.entity';
 
 @Controller('users')
 export class UsersController {
@@ -22,7 +22,7 @@ export class UsersController {
   }
   @Get('/:id')
   getUserById(
-    @Param('id', ParseIntPipe,  new CustomPipe(11)) id: number,
+    @Param('id', ParseIntPipe, new CustomPipe(11)) id: number,
   ): User | object {
     const selectedUser = this.userService.getUser(id);
     return (
@@ -36,10 +36,10 @@ export class UsersController {
     @Body(new ValidationPipe(), new CustomPipe(11), new MobilePipe())
     data: CreateUserDto,
   ) {
-    this.userService.addUser(data);
+    const newUser = this.userService.addUser(data);
     return {
       message: 'new user added',
-      data: this.userService.getUsers(),
+      data: newUser,
     };
   }
 }

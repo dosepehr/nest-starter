@@ -15,7 +15,7 @@ export class MobilePipe implements PipeTransform {
       if (!normalized) {
         throw new BadRequestException('mobile is not in a valid format');
       }
-      return { mobile: normalized };
+      return { ...value, mobile: normalized };
     } else {
       throw new BadRequestException('mobile must be only numbers');
     }
