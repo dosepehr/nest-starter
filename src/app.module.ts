@@ -12,7 +12,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       port: 3306,
       username: 'root',
       password: '',
-      database:'task_manager'
+      database: 'task_manager',
+      synchronize: true,
     }),
     UsersModule,
   ],
