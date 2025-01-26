@@ -15,7 +15,7 @@ export class UsersService {
     return this.userRepository.find({});
   }
   getUser(id: number): Promise<User | null> {
-    // return this.userRepository.find
+    return this.userRepository.findOne({ where: { id } });
   }
   addUser(user: CreateUserDto): User {
     const newUser = this.userRepository.create(user);

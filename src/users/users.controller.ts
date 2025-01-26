@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  NotFoundException,
   Param,
   ParseIntPipe,
   Post,
@@ -21,15 +22,16 @@ export class UsersController {
     return this.userService.getUsers();
   }
   @Get('/:id')
-  getUserById(
+  async getUserById(
     @Param('id', ParseIntPipe, new CustomPipe(11)) id: number,
-  ): User | object {
-    const selectedUser = this.userService.getUser(id);
-    return (
-      selectedUser || {
-        message: 'no user found',
-      }
-    );
+  ): Promise<User | null> {
+    const selectedUser = await this.userService.getUser(id);
+    if (!selectedUser)
+      throw new NotFoundException({
+        status: false,
+        message: `no user found with id : ${id}`,
+      });
+    return selectedUser;
   }
   @Post('/')
   addUser(
