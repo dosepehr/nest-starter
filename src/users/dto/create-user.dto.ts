@@ -1,4 +1,5 @@
 import {
+  IsEmail,
   IsNotEmpty,
   IsString,
   MaxLength,
@@ -10,6 +11,14 @@ export class CreateUserDto {
   @MaxLength(15)
   name: string;
 
+  @IsEmail()
+  @MinLength(4)
+  @MaxLength(40)
+  email: string;
+
   @IsNotEmpty()
   mobile: string;
+  @MinLength(8)
+  @MaxLength(20)
+  password: string;
 }
