@@ -1,9 +1,10 @@
+import { Project } from 'src/resources/projects/entities/project.entity';
 import { Injectable } from '@nestjs/common';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Project } from './entities/project.entity';
+import { Message } from 'src/interfaces/message.interface';
 
 @Injectable()
 export class ProjectsService {
@@ -11,13 +12,23 @@ export class ProjectsService {
     @InjectRepository(Project)
     private readonly projectRepository: Repository<Project>,
   ) {}
-  async create(data: CreateProjectDto) {
+  async create(data: CreateProjectDto): Promise<Message<Project>> {
     const newProject = this.projectRepository.create(data);
-    return await this.projectRepository.save(newProject);
+    await this.projectRepository.save(newProject);
+    return {
+      message: 'Project added',
+      status: true,
+      data: newProject,
+    };
   }
 
-  findAll() {
-    return `This action returns all projects`;
+  async findAll(): Promise<Message<Project[]>> {
+    const projects = await this.projectRepository.find();
+    return {
+      message: 'Success',
+      status: true,
+      data: projects,
+    };
   }
 
   findOne(id: number) {
