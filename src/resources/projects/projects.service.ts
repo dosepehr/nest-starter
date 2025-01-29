@@ -58,11 +58,21 @@ export class ProjectsService {
     };
   }
 
-  update(id: number, updateProjectDto: UpdateProjectDto) {
-    return `This action updates a #${id} project`;
+  async update(id: number, data: UpdateProjectDto) {
+    await this.findOne(id);
+    await this.projectRepository.update(id, data);
+    return {
+      message: 'Project edited',
+      status: true,
+    };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} project`;
+  async remove(id: number) {
+    await this.findOne(id);
+    await this.projectRepository.delete(id);
+    return {
+      message: 'Project edited',
+      status: true,
+    };
   }
 }
