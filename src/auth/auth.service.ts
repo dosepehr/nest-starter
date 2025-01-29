@@ -1,10 +1,17 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { User } from 'src/users/entities/users.entity';
 import { hashPassword } from 'src/utils/hashPassword';
 import { Repository } from 'typeorm';
 import { Message } from 'src/interfaces/message.interface';
+import { SignInUserDto } from 'src/users/dto/signIn-user.dto';
+import { comparePassword } from 'src/utils/comparePassword';
+import { instanceToPlain } from 'class-transformer';
 @Injectable()
 export class AuthService {
   constructor(
@@ -31,5 +38,19 @@ export class AuthService {
       message: 'user signed up successfully',
       status: true,
     };
+  }
+  async signIn(data: SignInUserDto): Promise<any> {
+    const user = await this.userRepository.findOne({
+      where: [{ email: data.identifier }, { name: data.identifier }],
+    });
+
+    if (!user) {
+      throw new NotFoundException('No user found');
+    }
+    const passwordMatch = await comparePassword(data.password, user.password);
+    if (!passwordMatch) {
+      throw new NotFoundException('No user found');
+    }
+    return instanceToPlain(user);
   }
 }

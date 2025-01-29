@@ -19,6 +19,5 @@ export class MobilePipe implements PipeTransform {
     } else {
       throw new BadRequestException('mobile must be only numbers');
     }
-    return value;
   }
 }
