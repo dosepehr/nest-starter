@@ -4,7 +4,7 @@ import {
   Injectable,
   PipeTransform,
 } from '@nestjs/common';
-import { normalizeMobileNumber } from 'src/utils/normalizePhoneNumber';
+import { normalizeMobileNumber } from 'src/utils/funcs/normalizePhoneNumber';
 
 @Injectable()
 export class MobilePipe implements PipeTransform {

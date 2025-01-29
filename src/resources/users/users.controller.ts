@@ -7,7 +7,7 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CustomPipe } from 'src/pipes/custom.pipe';
+import { CustomPipe } from 'src/utils/pipes/custom.pipe';
 import { User } from './entities/users.entity';
 
 @Controller('users')

@@ -4,14 +4,14 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { User } from 'src/users/entities/users.entity';
-import { hashPassword } from 'src/utils/hashPassword';
+import { CreateUserDto } from '../users/dto/create-user.dto';
+import { hashPassword } from 'src/utils/funcs/hashPassword';
 import { Repository } from 'typeorm';
 import { Message } from 'src/interfaces/message.interface';
-import { SignInUserDto } from 'src/users/dto/signIn-user.dto';
-import { comparePassword } from 'src/utils/comparePassword';
+import { comparePassword } from 'src/utils/funcs/comparePassword';
 import { instanceToPlain } from 'class-transformer';
+import { User } from '../users/entities/users.entity';
+import { SignInUserDto } from '../users/dto/signIn-user.dto';
 @Injectable()
 export class AuthService {
   constructor(

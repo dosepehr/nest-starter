@@ -1,9 +1,9 @@
 import { Body, Controller, Post, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { Message } from 'src/interfaces/message.interface';
-import { SignInUserDto } from 'src/users/dto/signIn-user.dto';
-import { MobilePipe } from 'src/pipes/validate/mobile/mobile.pipe';
+import { MobilePipe } from 'src/utils/pipes/mobile.pipe';
+import { CreateUserDto } from '../users/dto/create-user.dto';
+import { SignInUserDto } from '../users/dto/signIn-user.dto';
 
 @Controller('auth')
 export class AuthController {
