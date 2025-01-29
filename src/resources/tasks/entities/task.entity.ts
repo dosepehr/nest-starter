@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Project } from 'src/resources/projects/entities/project.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum TaskStatusEnum {
   Done = 'done',
@@ -22,4 +23,7 @@ export class Task {
     default: TaskStatusEnum.NotStarted,
   })
   status: TaskStatusEnum;
+
+  @ManyToOne(() => Project, (project) => project.id)
+  project: Project;
 }
