@@ -5,6 +5,7 @@ import { UpdateProjectDto } from './dto/update-project.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Message } from 'src/interfaces/message.interface';
+import { stat } from 'fs';
 
 @Injectable()
 export class ProjectsService {
@@ -22,12 +23,17 @@ export class ProjectsService {
     };
   }
 
-  async findAll(): Promise<Message<Project[]>> {
-    const projects = await this.projectRepository.find();
+  async findAll(status): Promise<Message<Project[]>> {
+    const projects = await this.projectRepository.find({
+      where: {
+        status,
+      },
+    });
     return {
       message: 'Success',
       status: true,
       data: projects,
+      count: projects.length,
     };
   }
 
