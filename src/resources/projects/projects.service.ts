@@ -1,4 +1,7 @@
-import { Project } from 'src/resources/projects/entities/project.entity';
+import {
+  Project,
+  ProjectStatusEnum,
+} from 'src/resources/projects/entities/project.entity';
 import { Injectable } from '@nestjs/common';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
@@ -23,11 +26,17 @@ export class ProjectsService {
     };
   }
 
-  async findAll(status): Promise<Message<Project[]>> {
+  async findAll(
+    status: ProjectStatusEnum,
+    limit: number,
+    page: number,
+  ): Promise<Message<Project[]>> {
     const projects = await this.projectRepository.find({
       where: {
         status,
       },
+      skip: +limit * (+page - 1),
+      take: +limit,
     });
     return {
       message: 'Success',
