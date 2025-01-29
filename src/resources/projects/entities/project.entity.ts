@@ -2,7 +2,7 @@ import { Task } from 'src/resources/tasks/entities/task.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum ProjectStatusEnum {
-  Enable = 'nable',
+  Enable = 'enable',
   Disable = 'disable',
 }
 @Entity({ name: 'projects' })
