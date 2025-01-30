@@ -8,7 +8,6 @@ import { UpdateProjectDto } from './dto/update-project.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Message } from 'src/interfaces/message.interface';
-import { stat } from 'fs';
 
 @Injectable()
 export class ProjectsService {

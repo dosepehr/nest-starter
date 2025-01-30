@@ -1,5 +1,5 @@
 import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { ProjectStatusEnum } from 'src/resources/projects/entities/project.entity';
+import { TaskStatusEnum } from '../entities/task.entity';
 
 export class CreateTaskDto {
   @IsNotEmpty()
@@ -10,7 +10,10 @@ export class CreateTaskDto {
   @IsString()
   description: string;
 
-  @IsEnum(ProjectStatusEnum)
+  @IsEnum(TaskStatusEnum)
   @IsOptional()
-  status: ProjectStatusEnum;
+  status: TaskStatusEnum;
+
+  @IsNotEmpty()
+  projectId: number;
 }
