@@ -27,8 +27,16 @@ export class TasksService {
     return { message: 'Task added', status: true, data: newTask };
   }
 
-  findAll() {
-    return `This action returns all tasks`;
+  async findAll(): Promise<Message<Task[]>> {
+    const tasks = await this.taskRepository.find({
+      relations: ['project'],
+    });
+    return {
+      message: 'Success',
+      status: true,
+      data: tasks,
+      count: tasks.length,
+    };
   }
 
   findOne(id: number) {
