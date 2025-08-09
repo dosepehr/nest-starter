@@ -1,4 +1,4 @@
-import { CatGender } from 'src/utils/enums/cat.enum';
+import { Gender } from 'src/utils/enums/cat.enum';
 import {
     Entity,
     Column,
@@ -21,8 +21,8 @@ export class Cat {
 
     @Column({
         type: 'enum',
-        enum: CatGender,
-        default: CatGender.MALE,
+        enum: Gender,
+        default: Gender.MALE,
     })
     gender: string;
 

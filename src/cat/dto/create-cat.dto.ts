@@ -7,7 +7,7 @@ import {
     MaxLength,
     IsEnum,
 } from 'class-validator';
-import { CatGender } from 'src/utils/enums/cat.enum';
+import { Gender } from 'src/utils/enums/cat.enum';
 
 export class CreateCatDto {
     @IsString()
@@ -28,6 +28,6 @@ export class CreateCatDto {
     })
     age: number;
 
-    @IsEnum(CatGender)
+    @IsEnum(Gender)
     gender: string;
 }
