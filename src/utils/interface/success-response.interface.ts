@@ -1,5 +1,5 @@
 export interface SuccessResponse<T = undefined> {
-    message: string;
+    message?: string;
     status: boolean;
     data?: T;
 }

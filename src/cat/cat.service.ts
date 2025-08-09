@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
 import { Cat } from './entities/cat.entity';
@@ -21,19 +21,46 @@ export class CatService {
         };
     }
 
-    findAll() {
-        return `This action returns all cat`;
+    async findAll(): Promise<SuccessResponse<Cat[]>> {
+        const cats = await this.catRepository.find();
+        return {
+            status: true,
+            data: cats,
+        };
     }
 
-    findOne(id: number) {
-        return `This action returns a #${id} cat`;
+    async findOne(id: number) {
+        const cat = await this.catRepository.findOne({ where: { id } });
+
+        if (!cat) {
+            throw new NotFoundException(`Cat with ID ${id} not found`);
+        }
+
+        return {
+            status: true,
+            data: cat,
+        };
     }
 
-    update(id: number, updateCatDto: UpdateCatDto) {
-        return `This action updates a #${id} cat`;
+    async update(
+        id: number,
+        updateCatDto: UpdateCatDto,
+    ): Promise<SuccessResponse> {
+        await this.findOne(id);
+        await this.catRepository.update(id, updateCatDto);
+
+        return {
+            message: 'Cat updated successfully',
+            status: true,
+        };
     }
 
-    remove(id: number) {
-        return `This action removes a #${id} cat`;
+    async remove(id: number) {
+        await this.findOne(id);
+        await this.catRepository.delete(id);
+        return {
+            message: 'Cat deleted successfully',
+            status: true,
+        };
     }
 }
