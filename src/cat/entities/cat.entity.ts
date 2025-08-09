@@ -1,5 +1,12 @@
 import { CatGender } from 'src/utils/enums/cat.enum';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Entity,
+    Column,
+    PrimaryGeneratedColumn,
+    CreateDateColumn,
+    UpdateDateColumn,
+    DeleteDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Cat {
@@ -18,4 +25,13 @@ export class Cat {
         default: CatGender.MALE,
     })
     gender: string;
+
+    @CreateDateColumn({ type: 'timestamp' })
+    createdAt: Date;
+
+    @UpdateDateColumn({ type: 'timestamp' })
+    updatedAt: Date;
+
+    @DeleteDateColumn({ type: 'timestamp', nullable: true })
+    deletedAt?: Date;
 }

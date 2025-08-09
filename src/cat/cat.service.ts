@@ -63,4 +63,28 @@ export class CatService {
             status: true,
         };
     }
+    async softDelete(id: number) {
+        await this.findOne(id);
+        await this.catRepository.softDelete(id);
+        return {
+            message: 'Cat soft deleted successfully',
+            status: true,
+        };
+    }
+    async restore(id: number) {
+        const cat = await this.catRepository.findOne({
+            where: { id },
+            withDeleted: true,
+        });
+        if (!cat) {
+            throw new NotFoundException(`Cat with ID ${id} not found`);
+        }
+
+        await this.catRepository.restore(id);
+
+        return {
+            message: 'Cat restored successfully',
+            status: true,
+        };
+    }
 }
