@@ -1,4 +1,4 @@
 export enum CatGender {
-    male = 'MALE',
-    female = 'FEMALE',
+    MALE = 'MALE',
+    FEMALE = 'FEMALE',
 }
