@@ -29,7 +29,7 @@ export class CatService {
         };
     }
 
-    async findOne(id: number) {
+    async findOne(id: number): Promise<SuccessResponse<Cat>> {
         const cat = await this.catRepository.findOne({ where: { id } });
 
         if (!cat) {
