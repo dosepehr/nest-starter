@@ -7,8 +7,10 @@ export class AppController {
 
     @Get()
     getHello(@Req() req: Request) {
-        return {
-            message: 'hi',
-        };
+        return this.appService.getHello();
+    }
+    @Get('/errors/forbidden')
+    forbiddenError() {
+        return this.appService.forbiddenError();
     }
 }

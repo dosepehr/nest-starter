@@ -1,4 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import {
+    ForbiddenException,
+    Injectable,
+} from '@nestjs/common';
 
 @Injectable()
 export class AppService {
@@ -6,5 +9,8 @@ export class AppService {
         return {
             data: 'hello',
         };
+    }
+    forbiddenError() {
+        throw new ForbiddenException(`you don't have access to this route`);
     }
 }
