@@ -75,8 +75,27 @@ export class CatService {
         id: number,
         updateCatDto: UpdateCatDto,
     ): Promise<SuccessResponse> {
+        // Check if the cat exists
         await this.findOne(id);
-        await this.catRepository.update(id, updateCatDto);
+
+        const { humanId, ...catData } = updateCatDto;
+
+        let updatePayload: Partial<Cat> = { ...catData };
+
+        // If humanId is provided, validate and set the relation
+        if (humanId !== undefined) {
+            const human = await this.humanRepository.findOne({
+                where: { id: humanId },
+            });
+            if (!human) {
+                throw new BadRequestException(
+                    `Human with ID ${humanId} not found`,
+                );
+            }
+            updatePayload.human = human;
+        }
+
+        await this.catRepository.update(id, updatePayload);
 
         return {
             message: 'Cat updated successfully',
