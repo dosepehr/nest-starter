@@ -1,20 +1,43 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
 import { Cat } from './entities/cat.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SuccessResponse } from 'src/utils/interface/success-response.interface';
+import { Human } from 'src/human/entities/human.entity';
 
 @Injectable()
 export class CatService {
     constructor(
         @InjectRepository(Cat)
         private readonly catRepository: Repository<Cat>,
+        @InjectRepository(Human)
+        private readonly humanRepository: Repository<Human>,
     ) {}
     async create(createCatDto: CreateCatDto): Promise<SuccessResponse> {
-        const cat = this.catRepository.create(createCatDto);
+        const { humanId, ...catData } = createCatDto;
+
+        // Check if the human exists
+        const human = await this.humanRepository.findOne({
+            where: { id: humanId },
+        });
+        if (!human) {
+            throw new BadRequestException(`Human with ID ${humanId} not found`);
+        }
+
+        // Create a new cat and assign the human
+        const cat = this.catRepository.create({
+            ...catData,
+            human,
+        });
+
         await this.catRepository.save(cat);
+
         return {
             message: 'Cat created successfully',
             status: true,

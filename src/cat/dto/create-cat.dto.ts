@@ -6,6 +6,7 @@ import {
     MinLength,
     MaxLength,
     IsEnum,
+    IsNotEmpty,
 } from 'class-validator';
 import { Gender } from 'src/utils/enums/cat.enum';
 
@@ -28,6 +29,16 @@ export class CreateCatDto {
     })
     age: number;
 
-    @IsEnum(Gender)
+    @IsEnum(Gender, {
+        message: 'gender must be either MALE or FEMALE',
+    })
     gender: string;
+
+    @IsInt({
+        message: 'humanId must be a valid integer',
+    })
+    @IsNotEmpty({
+        message: 'humanId is required',
+    })
+    humanId: number;
 }

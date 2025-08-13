@@ -1,3 +1,4 @@
+import { Cat } from 'src/cat/entities/cat.entity';
 import { Gender } from 'src/utils/enums/cat.enum';
 import {
     Entity,
@@ -6,6 +7,7 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     DeleteDateColumn,
+    OneToMany,
 } from 'typeorm';
 
 @Entity()
@@ -34,4 +36,7 @@ export class Human {
 
     @DeleteDateColumn({ type: 'timestamp', nullable: true })
     deletedAt?: Date;
+
+    @OneToMany((type) => Cat, (cat) => cat.human)
+    cats: Cat[];
 }
