@@ -22,7 +22,9 @@ export class HumanService {
     }
 
     async findAll(): Promise<SuccessResponse<Human[]>> {
-        const humans = await this.humanRepository.find();
+        const humans = await this.humanRepository.find({
+            relations: ['cats'],
+        });
         return {
             status: true,
             data: humans,
@@ -30,7 +32,10 @@ export class HumanService {
     }
 
     async findOne(id: number) {
-        const human = await this.humanRepository.findOne({ where: { id } });
+        const human = await this.humanRepository.findOne({
+            where: { id },
+            relations: ['cats'],
+        });
 
         if (!human) {
             throw new NotFoundException(`Human with ID ${id} not found`);
