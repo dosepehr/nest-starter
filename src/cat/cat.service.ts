@@ -2,6 +2,7 @@ import {
     BadRequestException,
     Injectable,
     NotFoundException,
+    UnprocessableEntityException,
 } from '@nestjs/common';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
@@ -27,7 +28,7 @@ export class CatService {
             where: { id: humanId },
         });
         if (!human) {
-            throw new BadRequestException(`Human with ID ${humanId} not found`);
+            throw new UnprocessableEntityException(`Human with ID ${humanId} not found`);
         }
 
         // Create a new cat and assign the human
@@ -62,7 +63,7 @@ export class CatService {
         });
 
         if (!cat) {
-            throw new NotFoundException(`Cat with ID ${id} not found`);
+            throw new UnprocessableEntityException(`Cat with ID ${id} not found`);
         }
 
         return {
@@ -125,7 +126,7 @@ export class CatService {
             withDeleted: true,
         });
         if (!cat) {
-            throw new NotFoundException(`Cat with ID ${id} not found`);
+            throw new UnprocessableEntityException(`Cat with ID ${id} not found`);
         }
 
         await this.catRepository.restore(id);
