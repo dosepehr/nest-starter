@@ -45,7 +45,9 @@ export class CatService {
     }
 
     async findAll(): Promise<SuccessResponse<Cat[]>> {
-        const cats = await this.catRepository.find();
+        const cats = await this.catRepository.find({
+            relations: ['human'],
+        });
         return {
             status: true,
             data: cats,
@@ -53,7 +55,11 @@ export class CatService {
     }
 
     async findOne(id: number): Promise<SuccessResponse<Cat>> {
-        const cat = await this.catRepository.findOne({ where: { id } });
+        const cat = await this.catRepository.findOne({
+            where: { id },
+
+            relations: ['human'],
+        });
 
         if (!cat) {
             throw new NotFoundException(`Cat with ID ${id} not found`);
